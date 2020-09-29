@@ -1,6 +1,5 @@
 import React from "react";
 import io from "socket.io-client";
-import styled from "@emotion/styled";
 
 import ConnectScreen from "./screens/Connect";
 import DisconnectedScreen from "./screens/Disconnected";
@@ -8,17 +7,6 @@ import LoadingScreen from "./screens/Loading";
 import PlayingScreen from "./screens/Playing";
 import FinishedScreen from "./screens/Finished";
 import {Game} from "./types";
-import Players from "./components/Players";
-
-const Container = styled.main`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  flex-direction: column;
-  position: relative;
-  padding: 24px;
-`;
 
 const socket = io(process.env.REACT_APP_SERVER_URL || "/", {autoConnect: false});
 
@@ -52,18 +40,24 @@ function App() {
   }, []);
 
   return (
-    <Container>
-      {game && Boolean(game.players?.length) && <Players players={game.players} />}
+    <main>
       {status === "init" && <ConnectScreen onConnect={handleConnect} />}
       {status === "disconnected" && <DisconnectedScreen />}
-      {!game || (status === "loading" && <LoadingScreen />)}
+      {status === "loading" && <LoadingScreen />}
+      {Boolean(game?.players?.length) && (
+        <ul className="nes-list is-disc" id="players">
+          {game?.players.map((player) => (
+            <li key={player.id}>{player.name}</li>
+          ))}
+        </ul>
+      )}
       {game && status === "playing" && (
         <PlayingScreen pokemon={game.pokemon} onGuess={handleGuess} />
       )}
       {game && status === "finished" && (
         <FinishedScreen pokemon={game.pokemon} winner={game.winner} />
       )}
-    </Container>
+    </main>
   );
 }
 

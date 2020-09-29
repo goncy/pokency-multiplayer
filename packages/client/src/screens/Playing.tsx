@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "@emotion/styled";
 
 import {Game} from "../types";
 
@@ -8,17 +7,13 @@ interface Props {
   onGuess: (guess: string) => void;
 }
 
-const Form = styled.form`
-  display: inline-flex;
-`;
-
 const PlayingScreen: React.FC<Props> = ({pokemon, onGuess}) => {
   const [guess, setGuess] = React.useState<string>("");
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    onGuess(guess);
+    guess && onGuess(guess);
   }
 
   return (
@@ -36,7 +31,7 @@ const PlayingScreen: React.FC<Props> = ({pokemon, onGuess}) => {
         }}
         width={512}
       />
-      <Form onSubmit={handleSubmit}>
+      <form style={{display: "inline-flex"}} onSubmit={handleSubmit}>
         <input
           autoFocus
           className="nes-input"
@@ -46,7 +41,7 @@ const PlayingScreen: React.FC<Props> = ({pokemon, onGuess}) => {
         <button className="nes-btn is-primary" type="submit">
           Adivinar
         </button>
-      </Form>
+      </form>
     </>
   );
 };

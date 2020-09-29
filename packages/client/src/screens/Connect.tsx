@@ -1,10 +1,4 @@
 import React from "react";
-import styled from "@emotion/styled";
-
-const Submit = styled.button`
-  width: 100%;
-  margin-top: 24px;
-`;
 
 interface Props {
   onConnect: (name: string, room: string) => void;
@@ -49,10 +43,14 @@ const ConnectScreen: React.FC<Props> = ({onConnect}) => {
           onChange={(event) => setRoom(event.target.value)}
         />
       </div>
-      {error && <span className="nes-text is-error">{error}</span>}
-      <Submit className="nes-btn is-primary" type="submit">
+      {error && (
+        <div className="nes-text is-error" style={{marginTop: 12, marginBottom: 0}}>
+          {error}
+        </div>
+      )}
+      <button className="nes-btn is-primary" style={{width: "100%", marginTop: 24}} type="submit">
         Connect
-      </Submit>
+      </button>
     </form>
   );
 };
