@@ -47,3 +47,5 @@ server.on("connection", (socket) => {
     server.in(room).emit("game", roomApi.game(room));
   });
 });
+
+export default server;
