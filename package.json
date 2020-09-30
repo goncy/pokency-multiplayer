@@ -8,6 +8,6 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "dev": "lerna run dev --parallel --stream"
+    "start": "lerna run dev --parallel --stream"
   }
 }
